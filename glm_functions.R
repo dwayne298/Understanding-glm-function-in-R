@@ -1,3 +1,5 @@
+# Runs gamma and poisson glm
+
 if(!exists("prepare_X_matrix", mode="function")){
   source("prepare_X_matrix.R")
 }
