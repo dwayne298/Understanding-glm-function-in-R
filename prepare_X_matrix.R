@@ -1,4 +1,4 @@
-# Prepare X matrix including One-hot encode categorical variables
+# One-hot encode categorical variables
 prepare_X_matrix <- function(data,factors){
     factors_new <- c()
     for(i in 1:length(factors)){
