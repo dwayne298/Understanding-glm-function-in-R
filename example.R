@@ -33,12 +33,22 @@ df$poisson_mean <- exp(0.15 +
 df$poisson_response <- rpois(nrow(df),df$poisson_mean)
 
 
-
+start.time <- Sys.time()
 test <- glm(gamma_response ~ Factor1+Factor2+Factor3+Factor4,family = Gamma(link="log"), data=df)
-gammaglm(data.table(df),"gamma_response",c("Factor1","Factor2","Factor3","Factor4"))
+round(Sys.time() - start.time,2)
+
+start.time <- Sys.time()
+simple_glm(data.table(df),"gamma_response",c("Factor1","Factor2","Factor3","Factor4"),"gamma")
+round(Sys.time() - start.time,2)
+
 summary(test)
 
-
+start.time <- Sys.time()
 test <- glm(poisson_response ~ Factor1+Factor2+Factor3+Factor4,family = poisson(link="log"), data=df)
-poissonglm(data.table(df),"poisson_response",c("Factor1","Factor2","Factor3","Factor4"))
+round(Sys.time() - start.time,2)
+
+start.time <- Sys.time()
+simple_glm(data.table(df),"poisson_response",c("Factor1","Factor2","Factor3","Factor4"),"poisson")
+round(Sys.time() - start.time,2)
+
 summary(test)
