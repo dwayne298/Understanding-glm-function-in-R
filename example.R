@@ -2,6 +2,7 @@ library(data.table)
 library(dplyr)
 library(ggplot2)
 
+source("glm_functions.R")
 
 set.seed(1)
 
@@ -37,14 +38,6 @@ test <- glm(gamma_response ~ Factor1+Factor2+Factor3+Factor4,family = Gamma(link
 gammaglm(data.table(df),"gamma_response",c("Factor1","Factor2","Factor3","Factor4"))
 summary(test)
 
-test <- glm(gamma_response ~ Factor1+Factor2+Factor3+Factor4,family = poisson(link="log"), data=df)
-poissonglm(data.table(df),"gamma_response",c("Factor1","Factor2","Factor3","Factor4"))
-summary(test)
-
-
-test <- glm(poisson_response ~ Factor1+Factor2+Factor3+Factor4,family = Gamma(link="log"), data=df)
-gammaglm(data.table(df),"poisson_response",c("Factor1","Factor2","Factor3","Factor4"))
-summary(test)
 
 test <- glm(poisson_response ~ Factor1+Factor2+Factor3+Factor4,family = poisson(link="log"), data=df)
 poissonglm(data.table(df),"poisson_response",c("Factor1","Factor2","Factor3","Factor4"))
