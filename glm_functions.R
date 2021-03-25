@@ -11,9 +11,9 @@ simple_glm <- function(data,response,factors,distribution){
     beta <- c(log(mean(data[[response]])),rep(0,ncol(X)-1))
     y <- matrix(data[[response]],ncol=1,byrow=F)
     beta_prev <- beta + 2
-    WX <- X
     X_t <- t(X)
     if(distribution=="gamma"){
+        WX <- X
         X_tWX <- X_t%*%WX
         X_tWXI <- solve(X_tWX)      
     }
@@ -23,12 +23,8 @@ simple_glm <- function(data,response,factors,distribution){
         mu <- exp(eta)
         z <- eta + (y[,1] - mu)/mu
         if(distribution=="poisson"){
-            for(i in 1:nrow(data)){
-                z[i] <- z[i]*mu[i]
-                for(j in 1:ncol(X)){
-                  WX[i,j] <- X[i,j]*mu[i]
-                }
-            }
+            z <- z*mu
+            WX <- X*c(mu)
             X_tWX <- X_t%*%WX
             X_tWXI <- solve(X_tWX)
         }
