@@ -1,15 +1,13 @@
 library(data.table)
-library(dplyr)
-library(ggplot2)
 
 source("glm_functions.R")
 
 set.seed(1)
 
-df <- data.frame("Factor1"=runif(10^6,18,100)
-                 ,"Factor2"=runif(10^6)
-                 ,"Factor3"=round(runif(10^6,1,10),0)
-                 ,"Factor4"=runif(10^6))
+df <- data.table::data.table("Factor1"=runif(10^6,18,100)
+                             ,"Factor2"=runif(10^6)
+                             ,"Factor3"=round(runif(10^6,1,10),0)
+                             ,"Factor4"=runif(10^6))
 
 df$Factor2 <- ifelse(df$Factor2<0.2,"Detached"
                      ,ifelse(df$Factor2<0.7,"Flat","Semi"))
@@ -38,7 +36,7 @@ test <- glm(gamma_response ~ Factor1+Factor2+Factor3+Factor4,family = Gamma(link
 round(Sys.time() - start.time,2)
 
 start.time <- Sys.time()
-simple_glm(data.table(df),"gamma_response",c("Factor1","Factor2","Factor3","Factor4"),"gamma")
+simple_glm(df,"gamma_response",c("Factor1","Factor2","Factor3","Factor4"),"gamma")
 round(Sys.time() - start.time,2)
 
 summary(test)
@@ -48,7 +46,7 @@ test <- glm(poisson_response ~ Factor1+Factor2+Factor3+Factor4,family = poisson(
 round(Sys.time() - start.time,2)
 
 start.time <- Sys.time()
-simple_glm(data.table(df),"poisson_response",c("Factor1","Factor2","Factor3","Factor4"),"poisson")
+simple_glm(df,"poisson_response",c("Factor1","Factor2","Factor3","Factor4"),"poisson")
 round(Sys.time() - start.time,2)
 
 summary(test)
